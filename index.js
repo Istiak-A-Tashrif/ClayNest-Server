@@ -45,6 +45,12 @@ async function run() {
       console.log(item);
     })
 
+    app.get('/allItems', async (req, res) => {
+      const cursor = itemsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
 
 
     // Send a ping to confirm a successful connection
