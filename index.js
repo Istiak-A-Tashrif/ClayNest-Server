@@ -28,12 +28,21 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const categoryCollection = client.db("artStore").collection("category")
+    const database = client.db("artStore");
+    const categoryCollection = database.collection("category");
+    const itemsCollection = database.collection("items")
     
     app.get('/', async (req, res) => {
-      const cursor = categoryCollection.find()
+      const cursor = categoryCollection.find();
       const result = await cursor.toArray();
-      res.send(result)
+      res.send(result);
+    })
+
+    app.post('/allItems', async (req, res) => {
+      const item = req.body;
+      const result = await itemsCollection.insertOne(item);
+      res.send(result);
+      console.log(item);
     })
 
 
